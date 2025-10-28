@@ -1,264 +1,215 @@
-# SENAI Bathroom Reporting System - Backend
+# SanitTrack - Sistema de Reporte de Banheiros do SENAI
 
-Backend RESTful API for the SENAI Bathroom Reporting System built with Node.js, Express, and PostgreSQL.
+Backend RESTful API para o sistema de reporte de problemas em banheiros do SENAI, permitindo que estudantes registrem problemas através de QR Codes e que a equipe de manutenção/administração acompanhe e resolva esses problemas.
 
-## 📋 Features
+## 📋 Funcionalidades
 
-- **Public Reporting**: Students can report bathroom issues via QR code scanning
-- **Admin Management**: Administrators can manage reports and update statuses
-- **Authentication**: Secure JWT-based authentication for admin panel
-- **Rate Limiting**: Prevent abuse with rate limiting per student ID
-- **Statistics**: Comprehensive reporting and analytics dashboard
+- **Reporte Público**: Estudantes podem reportar problemas nos banheiros através de leitura de QR Code
+- **Painel Administrativo**: Equipe de administração pode gerenciar os reportes e atualizar seus status
+- **Autenticação Segura**: Sistema de autenticação baseado em JWT para o painel administrativo
+- **Controle de Taxa**: Limitação de requisições por RA do aluno para evitar abuso
+- **Estatísticas**: Dashboard com relatórios e análises completas
+- **Histórico de Status**: Acompanhamento completo das mudanças de status dos reportes
 
-## 🛠️ Tech Stack
+## 🛠️ Tecnologias Utilizadas
 
 - **Runtime**: Node.js v16+
 - **Framework**: Express.js
-- **Database**: PostgreSQL
-- **Authentication**: JWT (jsonwebtoken + bcryptjs)
-- **Validation**: express-validator
-- **Security**: helmet, cors, express-rate-limit
+- **Banco de Dados**: PostgreSQL
+- **Autenticação**: JWT (jsonwebtoken + bcryptjs)
+- **Validação**: express-validator
+- **Segurança**: helmet, cors, express-rate-limit
 - **Logging**: winston, morgan
 
-## 📁 Project Structure
+## 📁 Estrutura do Projeto
 
 ```
-senai-bathroom-backend/
+sanittrack/
 ├── src/
-│   ├── server.js                 # Main server file
+│   ├── server.js                 # Arquivo principal do servidor
 │   ├── config/
-│   │   └── database.js          # PostgreSQL configuration
+│   │   └── database.js          # Configuração do PostgreSQL
 │   ├── models/
-│   │   ├── Report.js            # Report model
-│   │   ├── Admin.js             # Admin model
-│   │   └── ProblemCategory.js   # Problem category model
+│   │   ├── Report.js            # Modelo de reporte
+│   │   ├── Admin.js             # Modelo de administrador
+│   │   └── ProblemCategory.js   # Modelo de categoria de problema
 │   ├── controllers/
-│   │   ├── reportController.js  # Report logic
-│   │   └── adminController.js   # Admin logic
+│   │   ├── reportController.js  # Lógica de reportes
+│   │   └── adminController.js   # Lógica administrativa
 │   ├── routes/
-│   │   ├── reports.js           # Public routes
-│   │   └── admin.js             # Protected routes
+│   │   ├── reports.js           # Rotas públicas
+│   │   └── admin.js             # Rotas protegidas
 │   ├── middleware/
-│   │   ├── auth.js              # JWT authentication
-│   │   ├── validation.js        # Input validation
-│   │   ├── rateLimiter.js       # Rate limiting by RA
-│   │   └── errorHandler.js      # Error handling
+│   │   ├── auth.js              # Autenticação JWT
+│   │   ├── validation.js        # Validação de entrada
+│   │   ├── rateLimiter.js       # Limitação de taxa por RA
+│   │   └── errorHandler.js      # Tratamento de erros
 │   ├── utils/
-│   │   └── logger.js            # Winston logger
+│   │   └── logger.js            # Logger com Winston
 │   └── database/
-│       ├── setup.js             # Database setup script
-│       ├── seed.js              # Initial data seeding
+│       ├── setup.js             # Script de configuração do banco
+│       ├── seed.js              # Inserção de dados iniciais
 │       └── migrations/
 │           └── 001_create_tables.sql
-├── logs/                         # Application logs
-├── .env                          # Environment variables
+├── logs/                         # Logs da aplicação
+├── scripts/                      # Scripts auxiliares
+│   └── init-env.js              # Script de inicialização do ambiente
+├── .env                          # Variáveis de ambiente (não versionado)
+├── .env.example                  # Exemplo de variáveis de ambiente
 ├── .gitignore
 ├── package.json
 └── README.md
 ```
 
-## 🚀 Getting Started
+## 🚀 Como Começar
 
-### Prerequisites
+### Pré-requisitos
 
 - Node.js v16+
-- PostgreSQL database
-- npm or yarn
+- Banco de dados PostgreSQL
+- npm ou yarn
 
-### Installation
+### Instalação
 
-1. Clone the repository:
+1. Clone o repositório:
 ```bash
-git clone <repository-url>
-cd senai-bathroom-backend
+git clone <url-do-repositorio>
+cd sanittrack
 ```
 
-2. Install dependencies:
+2. Instale as dependências:
 ```bash
 npm install
 ```
 
-3. Set up PostgreSQL database:
-   - Install PostgreSQL if not already installed
-   - Create a new database:
-     ```sql
-     CREATE DATABASE senai_bathroom_db;
-     ```
-   - Create a user with privileges:
-     ```sql
-     CREATE USER senai_user WITH ENCRYPTED PASSWORD 'your_password';
-     GRANT ALL PRIVILEGES ON DATABASE senai_bathroom_db TO senai_user;
-     ```
+3. Configure o banco de dados PostgreSQL:
+   - Instale o PostgreSQL caso ainda não esteja instalado
+   - Crie um novo banco de dados
+   - Crie um usuário com privilégios adequados
 
-4. Configure environment variables in the `.env` file:
-```env
-# Server
-PORT=3000
-NODE_ENV=development
+4. Inicialize o ambiente (opcional):
+   
+   Execute o script de inicialização para criar o arquivo .env:
+   ```bash
+   npm run init-env
+   ```
+   
+   Este script criará um arquivo .env com base no .env.example e gerará uma chave JWT segura.
 
-# Database - Update these with your PostgreSQL configuration
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=senai_bathroom_db
-DB_USER=senai_user
-DB_PASSWORD=your_password
+5. Configure as variáveis de ambiente:
+   
+   Edite o arquivo `.env` com suas configurações específicas.
 
-# JWT - Change this to a secure random string (at least 32 characters)
-JWT_SECRET=your_super_secret_jwt_key_here_at_least_32_characters
-JWT_EXPIRE=7d
-
-# Rate Limiting
-RATE_LIMIT_WINDOW=15
-RATE_LIMIT_MAX=100
-
-# Frontend (CORS)
-FRONTEND_URL=http://localhost:5173
-```
-
-5. Set up the database:
+6. Configure o banco de dados:
 ```bash
 npm run setup
 ```
 
-6. Seed initial data:
+7. Insira os dados iniciais:
 ```bash
 npm run seed
 ```
 
-7. Start the development server:
+8. Inicie o servidor em modo de desenvolvimento:
 ```bash
 npm run dev
 ```
 
-### Production Deployment
+### Deploy em Produção
 
-```
+```bash
 npm start
 ```
 
-## 🗄️ Database Schema
+## ⚠️ Segurança em Ambientes de Produção
 
-The system uses four main tables:
+**ATENÇÃO**: Em ambientes de produção, é fundamental:
 
-1. **reports**: Stores all bathroom issue reports
-2. **problem_categories**: Defines problem categories
-3. **status_history**: Tracks status changes for reports
-4. **admins**: Administrator accounts
+1. Alterar todas as senhas padrão, especialmente as contas administrativas criadas pelo seed
+2. Usar uma chave JWT segura e mantê-la em segredo
+3. Configurar permissões adequadas no banco de dados
+4. Não expor o arquivo .env em repositórios públicos (já ignorado no .gitignore)
+5. Usar HTTPS em produção
+6. **Nunca commitar arquivos contendo credenciais reais**
 
-## 🔌 API Endpoints
+## 🗄️ Estrutura do Banco de Dados
 
-### Public Endpoints (No Authentication Required)
+O sistema utiliza quatro tabelas principais:
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
+1. **reports**: Armazena todos os reportes de problemas nos banheiros
+2. **problem_categories**: Define as categorias de problemas
+3. **status_history**: Rastreia as mudanças de status dos reportes
+4. **admins**: Contas de administradores
+
+## 🔌 Endpoints da API
+
+### Endpoints Públicos (Não Requerem Autenticação)
+
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
 | POST | `/api/reportes` | Criar um novo relatório de problema no banheiro |
 | GET | `/api/reportes/categorias` | Obter todas as categorias de problemas |
 | GET | `/api/reportes/predios` | Obter todos os prédios disponíveis |
 | GET | `/api/reportes/andares` | Obter todos os andares |
 
-### Admin Endpoints (JWT Authentication Required)
+### Endpoints Administrativos (Requerem Autenticação JWT)
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
 | POST | `/api/admin/login` | Autenticar usuário administrador |
 | GET | `/api/admin/reportes` | Obter todos os relatórios com filtragem |
 | GET | `/api/admin/reportes/:id` | Obter detalhes de um relatório específico |
 | PATCH | `/api/admin/reportes/:id` | Atualizar status do relatório |
 | GET | `/api/admin/estatisticas` | Obter estatísticas do sistema |
 
-## 🔐 Authentication
+## 🔐 Autenticação
 
-Admin endpoints require a JWT token in the Authorization header:
+Os endpoints administrativos requerem um token JWT no cabeçalho Authorization:
 
 ```
-Authorization: Bearer <your_jwt_token>
+Authorization: Bearer <seu_token_jwt>
 ```
 
-To obtain a token, use the login endpoint with valid admin credentials.
+Para obter um token, utilize o endpoint de login com credenciais de administrador válidas.
 
-## 🛡️ Security Features
+## 🛡️ Recursos de Segurança
 
-1. **JWT Authentication**: Secure token-based authentication
-2. **Rate Limiting**: 
-   - Global: 100 requests per 15 minutes per IP
-   - Per Student: 5 reports per hour per RA
-3. **Input Validation**: All inputs are validated and sanitized
-4. **Password Hashing**: bcryptjs with 10 salt rounds
-5. **CORS Protection**: Configured to accept only frontend origin
-6. **Helmet Security**: HTTP headers security enhancements
-
-## 📊 Default Admin Accounts
-
-After seeding, the following admin accounts will be available:
-
-1. **Administrator**
-   - Email: admin@senai.com
-   - Password: admin123
-
-2. **Cleaning Staff**
-   - Email: limpeza@senai.com
-   - Password: limpeza123
+1. **Autenticação JWT**: Autenticação segura baseada em tokens
+2. **Limitação de Taxa**: 
+   - Global: 100 requisições por 15 minutos por IP
+   - Por Aluno: 5 reportes por hora por RA
+3. **Validação de Entrada**: Todas as entradas são validadas e sanitizadas
+4. **Hash de Senhas**: bcryptjs com 10 rounds de salt
+5. **Proteção CORS**: Configurado para aceitar apenas a origem do frontend
+6. **Segurança com Helmet**: Melhorias nos cabeçalhos HTTP
 
 ## 📝 Logging
 
-The application uses Winston for logging with the following levels:
-- **Error**: For errors and exceptions
-- **Warn**: For warnings and non-critical issues
-- **Info**: For general information and request logging
+A aplicação utiliza Winston para logging com os seguintes níveis:
+- **Error**: Para erros e exceções
+- **Warn**: Para avisos e problemas não críticos
+- **Info**: Para informações gerais e logging de requisições
 
-Logs are stored in the `logs/` directory:
-- `combined.log`: All log entries
-- `error.log`: Only error-level entries
+Os logs são armazenados no diretório `logs/`:
+- `combined.log`: Todas as entradas de log
+- `error.log`: Apenas entradas de nível erro
 
-## 🧪 Testing
+## 🤝 Contribuindo
 
-To test the API manually:
+1. Faça um fork do repositório
+2. Crie sua branch de funcionalidade (`git checkout -b feature/FuncionalidadeIncrivel`)
+3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade incrível'`)
+4. Push para a branch (`git push origin feature/FuncionalidadeIncrivel`)
+5. Abra um Pull Request
 
-1. Create a report:
-```bash
-curl -X POST http://localhost:3000/api/reportes \
-  -H "Content-Type: application/json" \
-  -d '{
-    "ra": "123456",
-    "predio": "Prédio A",
-    "andar": "1º Andar",
-    "tipo_banheiro": "masculino",
-    "problemas": ["Falta de papel higiênico", "Lixeira cheia"]
-  }'
-```
+## 📄 Licença
 
-2. Login as admin:
-```bash
-curl -X POST http://localhost:3000/api/admin/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "admin@senai.com",
-    "password": "admin123"
-  }'
-```
+Este projeto está licenciado sob a Licença MIT.
 
-3. Get reports (replace TOKEN with actual JWT):
-```bash
-curl -X GET http://localhost:3000/api/admin/reportes \
-  -H "Authorization: Bearer TOKEN"
-```
+## 👥 Autores
 
-## 🤝 Contributing
+- Equipe SENAI Cimatec
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+## 🆘 Suporte
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 👥 Authors
-
-- SENAI Cimatec Team
-
-## 🆘 Support
-
-For support, contact the development team or open an issue in the repository.
+Para suporte, entre em contato com a equipe de desenvolvimento ou abra uma issue no repositório.

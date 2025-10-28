@@ -7,7 +7,8 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "setup": "node src/database/setup.js",
-    "seed": "node src/database/seed.js"
+    "seed": "node src/database/seed.js",
+    "init-env": "node scripts/init-env.js"
   },
   "keywords": [
     "senai",

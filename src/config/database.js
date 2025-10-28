@@ -40,7 +40,8 @@ const testConnection = async () => {
     logger.info(`Versão do PostgreSQL: ${result.rows[0].pg_version.split(',')[0]}`);
   } catch (err) {
     logger.error('Falha ao conectar ao PostgreSQL:', err.message);
-    logger.error('Verifique: DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD');
+    logger.error('Verifique as variáveis de ambiente no arquivo .env');
+    logger.error('Certifique-se de que o PostgreSQL está em execução e acessível');
     process.exit(1);
   }
 };

@@ -20,7 +20,7 @@ Content-Type: application/json
 ```
 
 **Request Body:**
-``json
+```json
 {
   "ra": "string (5-20 characters)",
   "predio": "string",
@@ -46,7 +46,7 @@ curl -X POST http://localhost:3000/api/reportes \
 ```
 
 **Success Response (201):**
-``json
+```json
 {
   "success": true,
   "message": "Obrigado pela sua contribuição!",
@@ -67,7 +67,7 @@ Retrieve all problem categories grouped by type.
 **Endpoint:** `GET /reportes/categorias`
 
 **Example Request:**
-``bash
+```bash
 curl -X GET http://localhost:3000/api/reportes/categorias
 ```
 
@@ -105,7 +105,7 @@ Retrieve all available buildings.
 **Endpoint:** `GET /reportes/predios`
 
 **Example Request:**
-``bash
+```bash
 curl -X GET http://localhost:3000/api/reportes/predios
 ```
 
@@ -185,8 +185,8 @@ Content-Type: application/json
 curl -X POST http://localhost:3000/api/admin/login \
   -H "Content-Type: application/json" \
   -d '{
-    "email": "admin@senai.com",
-    "password": "admin123"
+    "email": "admin@example.com",
+    "password": "sua_senha_segura"
   }'
 ```
 
@@ -197,7 +197,7 @@ curl -X POST http://localhost:3000/api/admin/login \
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "user": {
     "id": 1,
-    "email": "admin@senai.com",
+    "email": "admin@example.com",
     "nome": "Administrador",
     "role": "admin",
     "created_at": "2023-01-01T00:00:00.000Z"
@@ -393,7 +393,7 @@ curl -X GET http://localhost:3000/api/admin/estatisticas \
 ```
 
 **Success Response (200):**
-``json
+```json
 {
   "success": true,
   "statistics": {
@@ -506,7 +506,7 @@ curl -X GET http://localhost:3000/api/admin/estatisticas \
 
 ### JavaScript (Fetch API)
 
-```
+```javascript
 // Create a new report
 async function createReport(reportData) {
   try {
@@ -640,3 +640,4 @@ def get_reports(token):
     except Exception as e:
         print(f"Network error: {e}")
         return None
+```

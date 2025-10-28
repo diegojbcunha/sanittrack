@@ -30,6 +30,9 @@ const categories = [
   { categoria: 'acessibilidade', descricao: 'Rampa com problema' }
 ];
 
+// ATENÇÃO: Estas são credenciais de exemplo para desenvolvimento.
+// Em ambientes de produção, estas contas DEVEM ser alteradas imediatamente.
+// Recomenda-se criar novas contas administrativas e remover estas.
 const admins = [
   {
     email: 'admin@senai.com',
@@ -69,6 +72,7 @@ async function seedDatabase() {
       );
     }
     logger.info('Admins inserted successfully');
+    logger.warn('ATENÇÃO: Credenciais padrão inseridas. Em produção, altere estas senhas imediatamente!');
     
     await pool.end();
     logger.info('Database seeding completed successfully');

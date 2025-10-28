@@ -79,6 +79,7 @@ async function setupDatabase() {
     await setupPool.query(createTablesQuery);
     
     logger.info('Database tables created successfully');
+    logger.info('Lembre-se de configurar as variáveis de ambiente no arquivo .env com suas credenciais seguras');
     await setupPool.end();
     process.exit(0);
   } catch (error) {
