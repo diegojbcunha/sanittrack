@@ -2,7 +2,7 @@
 
 Backend RESTful API para o sistema de reporte de problemas em banheiros do SENAI, permitindo que estudantes registrem problemas através de QR Codes e que a equipe de manutenção/administração acompanhe e resolva esses problemas.
 
-## 📋 Funcionalidades
+## Funcionalidades
 
 - **Reporte Público**: Estudantes podem reportar problemas nos banheiros através de leitura de QR Code
 - **Painel Administrativo**: Equipe de administração pode gerenciar os reportes e atualizar seus status
@@ -11,7 +11,7 @@ Backend RESTful API para o sistema de reporte de problemas em banheiros do SENAI
 - **Estatísticas**: Dashboard com relatórios e análises completas
 - **Histórico de Status**: Acompanhamento completo das mudanças de status dos reportes
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **Runtime**: Node.js v16+
 - **Framework**: Express.js
@@ -21,7 +21,7 @@ Backend RESTful API para o sistema de reporte de problemas em banheiros do SENAI
 - **Segurança**: helmet, cors, express-rate-limit
 - **Logging**: winston, morgan
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 sanittrack/
@@ -61,7 +61,7 @@ sanittrack/
 └── README.md
 ```
 
-## 🚀 Como Começar
+## Como Começar
 
 ### Pré-requisitos
 
@@ -121,7 +121,7 @@ npm run dev
 npm start
 ```
 
-## ⚠️ Segurança em Ambientes de Produção
+## Segurança em Ambientes de Produção
 
 **ATENÇÃO**: Em ambientes de produção, é fundamental:
 
@@ -132,7 +132,7 @@ npm start
 5. Usar HTTPS em produção
 6. **Nunca commitar arquivos contendo credenciais reais**
 
-## 🗄️ Estrutura do Banco de Dados
+## Estrutura do Banco de Dados
 
 O sistema utiliza quatro tabelas principais:
 
@@ -162,7 +162,7 @@ O sistema utiliza quatro tabelas principais:
 | PATCH | `/api/admin/reportes/:id` | Atualizar status do relatório |
 | GET | `/api/admin/estatisticas` | Obter estatísticas do sistema |
 
-## 🔐 Autenticação
+## Autenticação
 
 Os endpoints administrativos requerem um token JWT no cabeçalho Authorization:
 
@@ -172,7 +172,7 @@ Authorization: Bearer <seu_token_jwt>
 
 Para obter um token, utilize o endpoint de login com credenciais de administrador válidas.
 
-## 🛡️ Recursos de Segurança
+## Recursos de Segurança
 
 1. **Autenticação JWT**: Autenticação segura baseada em tokens
 2. **Limitação de Taxa**: 
@@ -183,7 +183,7 @@ Para obter um token, utilize o endpoint de login com credenciais de administrado
 5. **Proteção CORS**: Configurado para aceitar apenas a origem do frontend
 6. **Segurança com Helmet**: Melhorias nos cabeçalhos HTTP
 
-## 📝 Logging
+## Logging
 
 A aplicação utiliza Winston para logging com os seguintes níveis:
 - **Error**: Para erros e exceções
@@ -194,7 +194,7 @@ Os logs são armazenados no diretório `logs/`:
 - `combined.log`: Todas as entradas de log
 - `error.log`: Apenas entradas de nível erro
 
-## 🤝 Contribuindo
+## Contribuindo
 
 1. Faça um fork do repositório
 2. Crie sua branch de funcionalidade (`git checkout -b feature/FuncionalidadeIncrivel`)
@@ -202,14 +202,14 @@ Os logs são armazenados no diretório `logs/`:
 4. Push para a branch (`git push origin feature/FuncionalidadeIncrivel`)
 5. Abra um Pull Request
 
-## 📄 Licença
+## Licença
 
 Este projeto está licenciado sob a Licença MIT.
 
-## 👥 Autores
+## Autores
 
 - Equipe SENAI Cimatec
 
-## 🆘 Suporte
+## Suporte
 
 Para suporte, entre em contato com a equipe de desenvolvimento ou abra uma issue no repositório.
