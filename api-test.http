@@ -1,0 +1,90 @@
+### =========================
+### Health Check
+### =========================
+GET http://localhost:3000/health
+Accept: application/json
+###
+
+### =========================
+### Admin Login
+### =========================
+POST http://localhost:3000/api/admin/login
+Content-Type: application/json
+
+{
+  "email": "admin@teste.com",
+  "password": "123456"
+}
+###
+
+### =========================
+### Get All Reports (Admin)
+### =========================
+GET http://localhost:3000/api/admin/reportes
+Authorization: Bearer SEU_TOKEN_AQUI
+Accept: application/json
+###
+
+### =========================
+### Get Report by ID (Admin)
+### =========================
+GET http://localhost:3000/api/admin/reportes/1
+Authorization: Bearer SEU_TOKEN_AQUI
+Accept: application/json
+###
+
+### =========================
+### Update Report Status (Admin)
+### =========================
+PATCH http://localhost:3000/api/admin/reportes/1
+Authorization: Bearer SEU_TOKEN_AQUI
+Content-Type: application/json
+
+{
+  "status": "resolved"
+}
+###
+
+### =========================
+### Get Statistics (Admin)
+### =========================
+GET http://localhost:3000/api/admin/estatisticas
+Authorization: Bearer SEU_TOKEN_AQUI
+Accept: application/json
+###
+
+### =========================
+### Create New Report
+### =========================
+POST http://localhost:3000/api/reportes/
+Content-Type: application/json
+
+{
+  "name": "Banheiro do 2º andar",
+  "categoryId": 1,
+  "buildingId": 2,
+  "floorId": 1,
+  "description": "Vazamento na pia"
+}
+###
+
+### =========================
+### List Categories
+### =========================
+GET http://localhost:3000/api/reportes/categorias
+Accept: application/json
+###
+
+### =========================
+### List Buildings
+### =========================
+GET http://localhost:3000/api/reportes/predios
+Accept: application/json
+###
+
+### =========================
+### List Floors
+### =========================
+GET http://localhost:3000/api/reportes/andares
+Accept: application/json
+###
